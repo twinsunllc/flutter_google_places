@@ -38,6 +38,8 @@ Prediction p = await PlacesAutocomplete.show(
                           apiKey: kGoogleApiKey,
                           mode: Mode.overlay, // Mode.fullscreen
                           language: "fr",
+                          allowBypass: true, //defaults to false, when true it adds a check icon in fullscreen to return the input text as the Prediction description
+                          dismissOnDone: true, //defaults to false, when true it adds functionality for the "done" key to dismiss the view and return the input text as the Prediction description
                           components: [new Component(Component.country, "fr")]);
 
 ```
