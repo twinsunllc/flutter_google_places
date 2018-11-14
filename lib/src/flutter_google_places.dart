@@ -18,6 +18,7 @@ class PlacesAutocompleteWidget extends StatefulWidget {
   final List<String> types;
   final List<Component> components;
   final bool strictbounds;
+  final bool allowBypass;
   final Mode mode;
   final Widget footer;
   final ValueChanged<PlacesAutocompleteResponse> onError;
@@ -33,6 +34,7 @@ class PlacesAutocompleteWidget extends StatefulWidget {
     this.types,
     this.components,
     this.strictbounds,
+    this.allowBypass,
     this.footer,
     this.onError,
     Key key,
@@ -53,7 +55,19 @@ class PlacesAutocompleteWidget extends StatefulWidget {
 class _PlacesAutocompleteScaffoldState extends PlacesAutocompleteState {
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(title: AppBarPlacesAutoCompleteTextField());
+    final appBar = AppBar(
+      title: AppBarPlacesAutoCompleteTextField(),
+      actions: <Widget>[
+        widget.allowBypass
+          ? new IconButton(
+            icon: Icon(Icons.check),
+            onPressed: () {
+              Navigator.of(context).pop(new Prediction(_queryTextController.text, null, null, null, null, null, null));
+            },
+          )
+          : new Container(),
+      ],
+    );
     final body = PlacesAutocompleteResult(onTap: Navigator.of(context).pop);
     return Scaffold(appBar: appBar, body: body);
   }
@@ -403,6 +417,7 @@ class PlacesAutocomplete {
       List<String> types,
       List<Component> components,
       bool strictbounds,
+      bool allowBypass = false,
       Widget footer,
       ValueChanged<PlacesAutocompleteResponse> onError}) {
     final builder = (BuildContext ctx) => PlacesAutocompleteWidget(
@@ -414,6 +429,7 @@ class PlacesAutocomplete {
           location: location,
           radius: radius,
           strictbounds: strictbounds,
+          allowBypass: allowBypass,
           offset: offset,
           hint: hint,
           footer: footer,
