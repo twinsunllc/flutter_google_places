@@ -17,8 +17,7 @@ class PlacesAutocompleteWidget extends StatefulWidget {
   final String language;
   final List<String> types;
   final List<Component> components;
-  final bool strictbounds;
-  final bool allowBypass;
+  final bool strictbounds, allowBypass, dismissOnDone;
   final Mode mode;
   final Widget footer;
   final ValueChanged<PlacesAutocompleteResponse> onError;
@@ -35,6 +34,7 @@ class PlacesAutocompleteWidget extends StatefulWidget {
     this.components,
     this.strictbounds,
     this.allowBypass,
+    this.dismissOnDone,
     this.footer,
     this.onError,
     Key key,
@@ -243,6 +243,9 @@ class _AppBarPlacesAutoCompleteTextFieldState
         child: TextField(
           controller: state._queryTextController,
           autofocus: true,
+          onSubmitted: (String s){
+            Navigator.of(context).pop(new Prediction(s, null, null, null, null, null, null));
+          },
           style: TextStyle(
             color: Colors.white70,
             fontSize: 16.0,
@@ -418,6 +421,7 @@ class PlacesAutocomplete {
       List<Component> components,
       bool strictbounds,
       bool allowBypass = false,
+      bool dismissOnDone = false,
       Widget footer,
       ValueChanged<PlacesAutocompleteResponse> onError}) {
     final builder = (BuildContext ctx) => PlacesAutocompleteWidget(
@@ -430,6 +434,7 @@ class PlacesAutocomplete {
           radius: radius,
           strictbounds: strictbounds,
           allowBypass: allowBypass,
+          dismissOnDone: dismissOnDone,
           offset: offset,
           hint: hint,
           footer: footer,
