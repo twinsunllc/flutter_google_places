@@ -56,7 +56,7 @@ class _PlacesAutocompleteScaffoldState extends PlacesAutocompleteState {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: AppBarPlacesAutoCompleteTextField(),
+      title: AppBarPlacesAutoCompleteTextField(dismissOnDone: widget.dismissOnDone),
       actions: <Widget>[
         widget.allowBypass
           ? new IconButton(
@@ -225,6 +225,11 @@ class _PlacesAutocompleteResult extends State<PlacesAutocompleteResult> {
 }
 
 class AppBarPlacesAutoCompleteTextField extends StatefulWidget {
+
+  final bool dismissOnDone;
+
+  AppBarPlacesAutoCompleteTextField({this.dismissOnDone = false});
+
   @override
   _AppBarPlacesAutoCompleteTextFieldState createState() =>
       _AppBarPlacesAutoCompleteTextFieldState();
@@ -243,9 +248,11 @@ class _AppBarPlacesAutoCompleteTextFieldState
         child: TextField(
           controller: state._queryTextController,
           autofocus: true,
-          onSubmitted: (String s){
-            Navigator.of(context).pop(new Prediction(s, null, null, null, null, null, null));
-          },
+          onSubmitted: widget.dismissOnDone
+          ? (String s){
+              Navigator.of(context).pop(new Prediction(s, null, null, null, null, null, null));
+            }
+          : null,
           style: TextStyle(
             color: Colors.white70,
             fontSize: 16.0,
