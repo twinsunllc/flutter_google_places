@@ -62,7 +62,7 @@ class _PlacesAutocompleteScaffoldState extends PlacesAutocompleteState {
           ? new IconButton(
             icon: Icon(Icons.check),
             onPressed: () {
-              Navigator.of(context).pop(new Prediction(_queryTextController.text, null, null, null, null, null, null));
+              Navigator.of(context).pop(new Prediction(_queryTextController.text, null, null, null, null, null, null, null));
             },
           )
           : new Container(),
@@ -250,7 +250,7 @@ class _AppBarPlacesAutoCompleteTextFieldState
           autofocus: true,
           onSubmitted: widget.dismissOnDone
           ? (String s){
-              Navigator.of(context).pop(new Prediction(s, null, null, null, null, null, null));
+              Navigator.of(context).pop(new Prediction(s, null, null, null, null, null, null, null));
             }
           : null,
           style: TextStyle(
@@ -341,7 +341,7 @@ abstract class PlacesAutocompleteState extends State<PlacesAutocompleteWidget> {
     super.initState();
     _queryTextController = TextEditingController(text: "");
 
-    _places = GoogleMapsPlaces(widget.apiKey);
+    _places = GoogleMapsPlaces(apiKey: widget.apiKey);
     _searching = false;
 
     _queryTextController.addListener(_onQueryChange);
