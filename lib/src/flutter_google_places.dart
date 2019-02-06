@@ -100,6 +100,14 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
                 child: _textField(context),
                 padding: const EdgeInsets.only(right: 8.0),
               )),
+              widget.allowBypass
+              ? new IconButton(
+                icon: Icon(Icons.check),
+                onPressed: () {
+                  Navigator.of(context).pop(new Prediction(_queryTextController.text, null, null, null, null, null, null, null));
+                },
+              )
+              : new Container(),
             ],
           )),
       Divider(
