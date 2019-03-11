@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter_responsive_cursor/flutter_responsive_cursor.dart';
 
 class PlacesAutocompleteWidget extends StatefulWidget {
   final String apiKey;
@@ -170,7 +171,7 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
   Icon get _iconBack =>
       Platform.isIOS ? Icon(Icons.arrow_back_ios) : Icon(Icons.arrow_back);
 
-  Widget _textField(BuildContext context) => TextField(
+  Widget _textField(BuildContext context) => ResponsiveCursorTextField(
         controller: _queryTextController,
         autofocus: true,
         style: TextStyle(
@@ -253,7 +254,7 @@ class _AppBarPlacesAutoCompleteTextFieldState
     return Container(
         alignment: Alignment.topLeft,
         margin: EdgeInsets.only(top: 4.0),
-        child: TextField(
+        child: ResponsiveCursorTextField(
           controller: state._queryTextController,
           autofocus: true,
           onSubmitted: widget.dismissOnDone
