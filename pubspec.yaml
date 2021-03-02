@@ -1,16 +1,16 @@
 name: flutter_google_places
 description: Google places autocomplete widgets for flutter. No wrapper, use https://pub.dartlang.org/packages/google_maps_webservice
-version: 0.1.4
+version: 0.1.5
 author: Hadrien Lejard <hadrien.lejard@gmail.com>
 homepage: https://github.com/lejard-h/flutter_google_places
 
 environment:
-  sdk: '>=2.0.0-dev <3.0.0'
+  sdk: ">=2.0.0-dev <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  rxdart: ^0.19.0
+  rxdart: ^0.25.0
   google_maps_webservice: ^0.0.10
 
 dev_dependencies:
