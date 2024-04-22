@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/src/flutter_google_places.dart';
+import 'package:flutter_google_places/src/places_autocomplete_field.dart';
 import 'package:google_maps_webservice/places.dart';
-
-import 'flutter_google_places.dart';
-import 'places_autocomplete_field.dart';
 
 /// A [FormField] that contains a [PlacesAutocompleteField].
 ///
@@ -43,27 +42,28 @@ class PlacesAutocompleteFormField extends FormField<String> {
   /// For documentation about the various parameters, see the [PlacesAutocompleteField] class
   /// and [new PlacesAutocompleteField], the constructor.
   PlacesAutocompleteFormField({
-    Key key,
-    @required String apiKey,
+    Key? key,
+    required String apiKey,
     this.controller,
-    Icon leading,
-    String initialValue,
+    Icon? leading,
+    String? initialValue,
     String hint = "Search",
-    Icon trailing,
-    VoidCallback trailingOnTap,
+    Icon? trailing,
+    VoidCallback? trailingOnTap,
     Mode mode = Mode.fullscreen,
-    num offset,
-    Location location,
-    num radius,
-    String language,
-    List<String> types,
-    List<Component> components,
-    bool strictbounds,
-    ValueChanged<PlacesAutocompleteResponse> onError,
+    num? offset,
+    Location? location,
+    num? radius,
+    String? language,
+    String? sessionToken,
+    List<String>? types,
+    List<Component>? components,
+    bool? strictbounds,
+    ValueChanged<PlacesAutocompleteResponse>? onError,
     InputDecoration inputDecoration = const InputDecoration(),
-    bool autovalidate = false,
-    FormFieldSetter<String> onSaved,
-    FormFieldValidator<String> validator,
+    AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
+    FormFieldSetter<String>? onSaved,
+    FormFieldValidator<String>? validator,
   })  : assert(initialValue == null || controller == null),
         super(
           key: key,
@@ -71,15 +71,15 @@ class PlacesAutocompleteFormField extends FormField<String> {
               controller != null ? controller.text : (initialValue ?? ''),
           onSaved: onSaved,
           validator: validator,
-          autovalidate: autovalidate,
+          autovalidateMode: autovalidateMode,
           builder: (FormFieldState<String> field) {
-            final _TextFormFieldState state = field;
+            final TextFormFieldState state = field as TextFormFieldState;
             final InputDecoration effectiveDecoration = inputDecoration
-                ?.applyDefaults(Theme.of(state.context).inputDecorationTheme);
+                .applyDefaults(Theme.of(state.context).inputDecorationTheme);
             return PlacesAutocompleteField(
               key: key,
               inputDecoration:
-                  effectiveDecoration?.copyWith(errorText: state.errorText),
+                  effectiveDecoration.copyWith(errorText: state.errorText),
               controller: state._effectiveController,
               apiKey: apiKey,
               leading: leading,
@@ -91,6 +91,7 @@ class PlacesAutocompleteFormField extends FormField<String> {
               radius: radius,
               components: components,
               language: language,
+              sessionToken: sessionToken,
               types: types,
               mode: mode,
               strictbounds: strictbounds,
@@ -104,20 +105,21 @@ class PlacesAutocompleteFormField extends FormField<String> {
   ///
   /// If null, this widget will create its own [TextEditingController] and
   /// initialize its [TextEditingController.text] with [initialValue].
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   @override
-  _TextFormFieldState createState() => _TextFormFieldState();
+  TextFormFieldState createState() => TextFormFieldState();
 }
 
-class _TextFormFieldState extends FormFieldState<String> {
-  TextEditingController _controller;
+class TextFormFieldState extends FormFieldState<String> {
+  TextEditingController? _controller;
 
-  TextEditingController get _effectiveController =>
+  TextEditingController? get _effectiveController =>
       widget.controller ?? _controller;
 
   @override
-  PlacesAutocompleteFormField get widget => super.widget;
+  PlacesAutocompleteFormField get widget =>
+      super.widget as PlacesAutocompleteFormField;
 
   @override
   void initState() {
@@ -125,7 +127,7 @@ class _TextFormFieldState extends FormFieldState<String> {
     if (widget.controller == null) {
       _controller = TextEditingController(text: widget.initialValue);
     } else {
-      widget.controller.addListener(_handleControllerChanged);
+      widget.controller!.addListener(_handleControllerChanged);
     }
   }
 
@@ -136,11 +138,12 @@ class _TextFormFieldState extends FormFieldState<String> {
       oldWidget.controller?.removeListener(_handleControllerChanged);
       widget.controller?.addListener(_handleControllerChanged);
 
-      if (oldWidget.controller != null && widget.controller == null)
+      if (oldWidget.controller != null && widget.controller == null) {
         _controller =
-            TextEditingController.fromValue(oldWidget.controller.value);
+            TextEditingController.fromValue(oldWidget.controller!.value);
+      }
       if (widget.controller != null) {
-        setValue(widget.controller.text);
+        setValue(widget.controller!.text);
         if (oldWidget.controller == null) _controller = null;
       }
     }
@@ -156,7 +159,7 @@ class _TextFormFieldState extends FormFieldState<String> {
   void reset() {
     super.reset();
     setState(() {
-      _effectiveController.text = widget.initialValue;
+      _effectiveController!.text = widget.initialValue!;
     });
   }
 
@@ -168,7 +171,8 @@ class _TextFormFieldState extends FormFieldState<String> {
     // notifications for changes originating from within this class -- for
     // example, the reset() method. In such cases, the FormField value will
     // already have been set.
-    if (_effectiveController.text != value)
-      didChange(_effectiveController.text);
+    if (_effectiveController!.text != value) {
+      didChange(_effectiveController!.text);
+    }
   }
 }
