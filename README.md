@@ -1,36 +1,26 @@
-# flutter_google_places
-<p align="left">
-  <a href="https://pub.dartlang.org/packages/flutter_google_places"><img alt="pub version" src="https://img.shields.io/pub/v/flutter_google_places.svg?style=flat-square"></a>
-</p>
+# flutter_google_places 
 
-Google places autocomplete widgets for flutter.
+[![Flutter Community: flutter_google_places](https://fluttercommunity.dev/_github/header/flutter_google_places)](https://github.com/fluttercommunity/community)
 
-<div style="text-align: center"><table><tr>
-    <td style="text-align: center">
-<img src="https://github.com/lejard-h/flutter_google_places/blob/master/flutter_01.png" height="400">
-</td>
-<td style="text-align: center">
-<img src="https://github.com/lejard-h/flutter_google_places/blob/master/flutter_02.png" height="400">
-</td>
-</tr>
-</table>
-</div>
+[![Pub](https://img.shields.io/pub/v/flutter_google_places.svg)](https://pub.dartlang.org/packages/flutter_google_places)
 
-## Getting Started
+This library provides Google places autocomplete widgets for flutter. It uses [google_maps_webservice](https://github.com/lejard-h/google_maps_webservice) library which directly refer to the official [documentation](https://developers.google.com/maps/web-services/) for google maps web service. 
 
-For help getting started with Flutter, view our online [documentation](http://flutter.io/).
+According to https://stackoverflow.com/a/52545293, you need to enable billing on your account, even if you are only using the free quota.
+
+
+## Installation
+
+In the `dependencies:` section of your `pubspec.yaml`, add the following line:
 
 ```yaml
-# pubspec.yaml
-
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_google_places: <last-version>
+  flutter_google_places: <latest_version>
 ```
 
-```dart
+## Usage
 
+```dart
 const kGoogleApiKey = "API_KEY";
 
 Prediction p = await PlacesAutocomplete.show(
@@ -41,7 +31,20 @@ Prediction p = await PlacesAutocomplete.show(
                           allowBypass: true, //defaults to false, when true it adds a check icon in fullscreen to return the input text as the Prediction description
                           dismissOnDone: true, //defaults to false, when true it adds functionality for the "done" key to dismiss the view and return the input text as the Prediction description
                           components: [new Component(Component.country, "fr")]);
-
 ```
 
-The library use [google_maps_webservice](https://github.com/lejard-h/google_maps_webservice) library which directly refer to the official [documentation](https://developers.google.com/maps/web-services/) for google maps web service. 
+#### Examples: 
+<div style="text-align: center"><table><tr>
+    <td style="text-align: center">
+<img src="https://raw.githubusercontent.com/fluttercommunity/flutter_google_places/master/flutter_01.png" height="400">
+</td>
+<td style="text-align: center">
+<img src="https://raw.githubusercontent.com/fluttercommunity/flutter_google_places/master/flutter_02.png" height="400">
+</td>
+</tr>
+</table>
+</div>
+
+## Example App
+
+View the Flutter app in the `example` directory.
